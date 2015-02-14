@@ -1,6 +1,6 @@
 {
   "name": "deffered-exec",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "description": "Child process execute with promise, deferred",
   "homepage": "https://github.com/ragingwind/deferred-exec",
   "author": {
@@ -22,8 +22,7 @@
   "dependencies": {
     "q": "^1.1.2"
   },
-  "devDependencies": {
-  },
+  "devDependencies": {},
   "scripts": {
     "test": "mocha"
   }
