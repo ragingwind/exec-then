@@ -1,5 +1,5 @@
 {
-  "name": "deffered-exec",
+  "name": "exec-then",
   "version": "1.0.0",
   "description": "Child process execute with promise, deferred",
   "homepage": "https://github.com/ragingwind/deferred-exec",
@@ -7,13 +7,13 @@
     "name": "ragingwind",
     "email": "ragingwind@gmail.com"
   },
-  "repository": "ragingwind/deffered-exec",
+  "repository": "ragingwind/exec-then",
   "license": "MIT",
   "files": [
     "index.js"
   ],
   "keywords": [
-    "deffered-exec",
+    "exec-then",
     "exec",
     "promise",
     "deferred",

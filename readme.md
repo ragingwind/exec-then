@@ -6,14 +6,14 @@
 ## Install
 
 ```sh
-$ npm install --save deffered-exec
+$ npm install --save exec-then
 ```
 
 
 ## Usage
 
 ```js
-var exec = require('deffered-exec');
+var exec = require('exec-then');
 
 exec('pwd', function(stdio, ack) {
   ack(stdio.stdout ? null : new Error('Where am I?'));
@@ -32,9 +32,9 @@ function(err) {
 MIT © [ragingwind](http://ragingwind.me)
 
 
-[npm-url]: https://npmjs.org/package/deffered-exec
-[npm-image]: https://badge.fury.io/js/deffered-exec.svg
-[travis-url]: https://travis-ci.org/ragingwind/deffered-exec
-[travis-image]: https://travis-ci.org/ragingwind/deffered-exec.svg?branch=master
-[daviddm-url]: https://david-dm.org/ragingwind/deffered-exec.svg?theme=shields.io
-[daviddm-image]: https://david-dm.org/ragingwind/deffered-exec
+[npm-url]: https://npmjs.org/package/exec-then
+[npm-image]: https://badge.fury.io/js/exec-then.svg
+[travis-url]: https://travis-ci.org/ragingwind/exec-then
+[travis-image]: https://travis-ci.org/ragingwind/exec-then.svg?branch=master
+[daviddm-url]: https://david-dm.org/ragingwind/exec-then.svg?theme=shields.io
+[daviddm-image]: https://david-dm.org/ragingwind/exec-then

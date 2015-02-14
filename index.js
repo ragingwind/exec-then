@@ -3,7 +3,7 @@
 var exec = require('child_process').exec;
 var q = require('q');
 
-function promisedExec(bin, opt, cb) {
+function execThen(bin, opt, cb) {
   var deferred = q.defer();
 
   if (typeof opt === 'function') {
@@ -32,4 +32,4 @@ function promisedExec(bin, opt, cb) {
   return deferred.promise;
 };
 
-module.exports = promisedExec;
+module.exports = execThen;
