@@ -1,0 +1,30 @@
+{
+  "name": "deffered-exec",
+  "version": "0.0.0",
+  "description": "Child process execute with promise, deferred",
+  "homepage": "https://github.com/ragingwind/deferred-exec",
+  "author": {
+    "name": "ragingwind",
+    "email": "ragingwind@gmail.com"
+  },
+  "repository": "ragingwind/deffered-exec",
+  "license": "MIT",
+  "files": [
+    "index.js"
+  ],
+  "keywords": [
+    "deffered-exec",
+    "exec",
+    "promise",
+    "deferred",
+    "chile_process"
+  ],
+  "dependencies": {
+    "q": "^1.1.2"
+  },
+  "devDependencies": {
+  },
+  "scripts": {
+    "test": "mocha"
+  }
+}
