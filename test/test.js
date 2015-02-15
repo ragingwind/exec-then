@@ -6,8 +6,12 @@ var path = require('path');
 var exec = require('../');
 
 describe('gadget', function () {
+  var opt = {
+    verbose: true
+  };
+
   it('should return current path', function() {
-    return exec('pwd').then(function(res) {
+    return exec('pwd', opt).then(function(res) {
       assert(res.stdout.indexOf(path.resolve(__dirname, '../')) !== -1);
     },
     function(err) {
@@ -17,7 +21,7 @@ describe('gadget', function () {
   });
 
   it('should return current files', function() {
-    return exec(['ls', '-al']).then(function(std) {
+    return exec(['ls', '-al'], opt).then(function(std) {
       assert(std.stdout.indexOf('test') !== -1);
       assert(std.stdout.indexOf('bower_component') === -1);
     },
@@ -28,7 +32,7 @@ describe('gadget', function () {
   });
 
   it('should return error message', function() {
-    return exec('mymimy', function(std, deferred) {
+    return exec('mymimy', opt, function(std, deferred) {
       if (std.stderr) {
         return deferred.reject(new Error('Did you have the command!!'));
       }

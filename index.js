@@ -23,6 +23,11 @@ function execThen(bin, opt, mid) {
       stderr: stderr
     };
 
+    if (opt.verbose){
+      process.stdout.write(stdout);
+      process.stderr.write(stderr);
+    }
+
     if (mid) {
       stdio.params = mid(stdio, deferred);
     }

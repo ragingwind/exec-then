@@ -36,6 +36,11 @@ exec(['ls', '-al'], function(std, deferred) {
 });
 ```
 
+## Options
+
+`exec-node` using same options to [Child Process options](http://goo.gl/axu96) except to options below.
+
+- `verbose`: `stderr` and `stdout` buffers that will be wrote via process.stdout/stderr write method
 
 ## License
 
