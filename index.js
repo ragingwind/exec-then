@@ -3,11 +3,11 @@
 var exec = require('child_process').exec;
 var q = require('q');
 
-function execThen(bin, opt, cb) {
+function execThen(bin, opt, mid) {
   var deferred = q.defer();
 
   if (typeof opt === 'function') {
-    cb = opt;
+    mid = opt;
     opt = {};
   }
 
@@ -23,10 +23,11 @@ function execThen(bin, opt, cb) {
       stderr: stderr
     };
 
-    cb(stdio, function(err, params) {
-      stdio.params = params;
-      !err ? deferred.resolve(stdio) : deferred.reject(err);
-    });
+    if (mid) {
+      stdio.params = mid(stdio, deferred);
+    }
+
+    deferred.resolve(stdio);
   });
 
   return deferred.promise;

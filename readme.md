@@ -15,14 +15,24 @@ $ npm install --save exec-then
 ```js
 var exec = require('exec-then');
 
-exec('pwd', function(stdio, ack) {
-  ack(stdio.stdout ? null : new Error('Where am I?'));
-}).then(function(res) {
+exec('pwd').then(function(res) {
   assert(res.stdout.indexOf(path.resolve(__dirname, '../')) !== -1);
-},
-function(err) {
+}, function(err) {
   console.log(err.toString());
   assert(false);
+});
+
+exec(['ls', '-al'], function(std, deferred) {
+  if (std.stdout.indexOf('test') === -1) {
+    return deferred.reject();
+  }
+  return true;
+}).then(function(res) {
+  if (res) {
+    console.log('You have test file');
+  }
+}, function() {
+  console.log('Where am I?');
 });
 ```
 

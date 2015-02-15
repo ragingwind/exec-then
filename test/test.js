@@ -7,9 +7,7 @@ var exec = require('../');
 
 describe('gadget', function () {
   it('should return current path', function() {
-    return exec('pwd', function(stdio, ack) {
-      ack(stdio.stdout ? null : new Error('Where am I?'));
-    }).then(function(res) {
+    return exec('pwd').then(function(res) {
       assert(res.stdout.indexOf(path.resolve(__dirname, '../')) !== -1);
     },
     function(err) {
@@ -19,11 +17,9 @@ describe('gadget', function () {
   });
 
   it('should return current files', function() {
-    return exec(['ls', '-al'], function(stdio, ack) {
-      ack(stdio.stdout ? null : new Error('Where am I?'));
-    }).then(function(stdio) {
-      assert(stdio.stdout.indexOf('test') !== -1);
-      assert(stdio.stdout.indexOf('bower_component') === -1);
+    return exec(['ls', '-al']).then(function(std) {
+      assert(std.stdout.indexOf('test') !== -1);
+      assert(std.stdout.indexOf('bower_component') === -1);
     },
     function(err) {
       console.log(err.toString());
@@ -32,15 +28,20 @@ describe('gadget', function () {
   });
 
   it('should return error message', function() {
-    return exec('mymimy', function(stdio, ack) {
-      ack(stdio.stderr ? null : new Error('Did you have the command!!'));
-    }).then(function(stdio) {
-      assert(stdio.stderr.indexOf('command not found') !== -1);
-      assert(stdio.stderr.indexOf('mimymi') === -1);
+    return exec('mymimy', function(std, deferred) {
+      if (std.stderr) {
+        return deferred.reject(new Error('Did you have the command!!'));
+      }
+      return true;
+    }).then(function(std) {
+      assert(std.stderr.indexOf('command not found') !== -1);
+      assert(std.stderr.indexOf('mimymi') === -1);
     },
-    function(err) {
-      console.log(err.toString());
-      assert(false);
+    function(e) {
+      console.log('You are at right place', e.toString());
+      assert(true);
+    }).catch(function(e) {
+      console.log('Something went wrong', e.toString());
     });
   });
 });
