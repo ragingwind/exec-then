@@ -25,7 +25,7 @@ describe('Test with child_process.exec', function () {
 
   it('should return error message', function() {
     return exec('mymimy', opt, function(std, deferred) {
-      if (std.stderr) {
+      if (!std.err) {
         return deferred.reject(new Error('Did you have the command!!'));
       }
       return true;
@@ -37,27 +37,23 @@ describe('Test with child_process.exec', function () {
       assert(true);
     });
   });
-});
-
-describe('Test with child_process.spawn', function () {
-  var opt = {
-    verbose: true
-  };
-
-  it('should return current path', function() {
-    return exec('pwd', opt).then(function(res) {
-      assert(res.stdout.indexOf(path.resolve(__dirname, '../')) !== -1);
-    });
-  });
 
   it('should return with err', function() {
-    return exec('mpm', opt).then(function(res) {
+    return exec('mpm').then(function(res) {
       assert(res.err);
     });
   });
 
   it('should show stdio data immediately', function() {
-    return exec('npm', opt).then(function(res) {
+    exec.verbose = true; // turn of verbose
+    return exec('npm').then(function(res) {
+      assert(true);
+    });
+  });
+
+  it('should show stdio data immediately', function() {
+    exec.verbose = false;
+    return exec('npm').then(function(res) {
       assert(true);
     });
   });
