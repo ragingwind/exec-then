@@ -9,6 +9,8 @@ function execThen(bin, opt, mid) {
   if (typeof opt === 'function') {
     mid = opt;
     opt = {};
+  } else if (!opt) {
+    opt = {};
   }
 
   // merge bin and arguments
