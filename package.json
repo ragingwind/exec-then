@@ -1,6 +1,6 @@
 {
   "name": "exec-then",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "Child process execute with promise, deferred",
   "homepage": "https://github.com/ragingwind/deferred-exec",
   "author": {
