@@ -68,7 +68,7 @@ function execThen(commands, opt, predicate) {
     opt = {};
   }
 
-  if (opt.verbose === undefined) {
+  if (Object.keys(opt).indexOf('verbose') === -1) {
     opt.verbose = execThen.verbose;
   }
 
