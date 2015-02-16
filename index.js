@@ -39,9 +39,6 @@ var childProcess = {
     });
 
     bin.on('close', function(code) {
-      if (code !== 0) {
-        stdio.err = new Error(stdio.stderr);
-      }
       done(stdio);
     });
   }
