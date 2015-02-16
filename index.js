@@ -1,13 +1,57 @@
 'use strict';
 
-var exec = require('child_process').exec;
+// var process = require('child_process');
 var q = require('q');
 
-function execThen(bin, opt, mid) {
+var childProcess = {
+  exec: function(bin, opt, done) {
+    require('child_process').exec(bin, opt, function(err, stdout, stderr) {
+      var stdio = {
+        err: err,
+        stdout: stdout,
+        stderr: stderr
+      };
+
+      done(stdio);
+    });
+  },
+  spawn: function(bin, opt, done) {
+    var bin = require('child_process').spawn(bin);
+    var maxBuffer = opt.maxBuffer || 200*1024;
+    var stdio = {
+      err: null,
+      stdout: '',
+      stderr: ''
+    };
+
+    bin.stdout.on('data', function(out) {
+      stdio.stdout += out;
+      process.stdout.write(out);
+    });
+
+    bin.stderr.on('data', function(err) {
+      stdio.stderr += err;
+      process.stderr.write(err);
+    });
+
+    bin.on('error', function(err) {
+      stdio.err = err;
+    });
+
+    bin.on('close', function(code) {
+      if (code !== 0) {
+        stdio.err = new Error(stdio.stderr);
+      }
+      done(stdio);
+    });
+  }
+};
+
+function execThen(bin, opt, predicate) {
   var deferred = q.defer();
 
   if (typeof opt === 'function') {
-    mid = opt;
+    predicate = opt;
     opt = {};
   } else if (!opt) {
     opt = {};
@@ -18,20 +62,9 @@ function execThen(bin, opt, mid) {
     bin = bin.join(' ');
   }
 
-  exec(bin, opt, function(err, stdout, stderr) {
-    var stdio = {
-      err: err,
-      stdout: stdout,
-      stderr: stderr
-    };
-
-    if (opt.verbose){
-      process.stdout.write(stdout);
-      process.stderr.write(stderr);
-    }
-
-    if (mid) {
-      stdio.params = mid(stdio, deferred);
+  childProcess[opt.verbose ? 'spawn' : 'exec'](bin, opt, function(stdio) {
+    if (predicate) {
+      stdio.params = predicate(stdio, deferred);
     }
 
     deferred.resolve(stdio);

@@ -40,7 +40,7 @@ exec(['ls', '-al'], function(std, deferred) {
 
 `exec-node` using same options to [Child Process options](http://goo.gl/axu96) except to options below.
 
-- `verbose`: `stderr` and `stdout` buffers that will be wrote via process.stdout/stderr write method
+- `verbose`: show stdio/stderr message while child process is running. if verbose set true? `child_process.spawn` will be executed.
 
 ## License
 

@@ -5,18 +5,14 @@ var assert = require('assert');
 var path = require('path');
 var exec = require('../');
 
-describe('gadget', function () {
+describe('Test with child_process.exec', function () {
   var opt = {
-    verbose: true
+    verbose: false
   };
 
   it('should return current path', function() {
     return exec('pwd', opt).then(function(res) {
       assert(res.stdout.indexOf(path.resolve(__dirname, '../')) !== -1);
-    },
-    function(err) {
-      console.log(err.toString());
-      assert(false);
     });
   });
 
@@ -24,10 +20,6 @@ describe('gadget', function () {
     return exec(['ls', '-al'], opt).then(function(std) {
       assert(std.stdout.indexOf('test') !== -1);
       assert(std.stdout.indexOf('bower_component') === -1);
-    },
-    function(err) {
-      console.log(err.toString());
-      assert(false);
     });
   });
 
@@ -42,10 +34,31 @@ describe('gadget', function () {
       assert(std.stderr.indexOf('mimymi') === -1);
     },
     function(e) {
-      console.log('You are at right place', e.toString());
       assert(true);
-    }).catch(function(e) {
-      console.log('Something went wrong', e.toString());
+    });
+  });
+});
+
+describe('Test with child_process.spawn', function () {
+  var opt = {
+    verbose: true
+  };
+
+  it('should return current path', function() {
+    return exec('pwd', opt).then(function(res) {
+      assert(res.stdout.indexOf(path.resolve(__dirname, '../')) !== -1);
+    });
+  });
+
+  it('should return with err', function() {
+    return exec('mpm', opt).then(function(res) {
+      assert(res.err);
+    });
+  });
+
+  it('should show stdio data immediately', function() {
+    return exec('npm', opt).then(function(res) {
+      assert(true);
     });
   });
 });
