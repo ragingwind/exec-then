@@ -10,6 +10,8 @@ function Bin(commands) {
     commands = commands.join(' ');
   }
 
+  // Origin code from:
+  // https://github.com/joyent/node/blob/master/lib/child_process.js#L615
   if (process.platform === 'win32') {
     this.bin = process.env.comspec || 'cmd.exe';
     this.args = ['/s', '/c', '"' + commands + '"'];
